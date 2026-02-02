@@ -1,7 +1,8 @@
-function ProductCard({ name, price, image }) {
+function ProductCard({ name, price, image, isUploaded }) {
   return (
     <div style={styles.card} className="soft-hover">
       {image && <img src={image} alt={name} style={styles.image} className="product-image" />}
+      {isUploaded && <div style={styles.badge}>New</div>}
       <p style={styles.ready}>Boutique Ready</p>
 
       <a
@@ -26,6 +27,7 @@ const styles = {
     boxShadow: "0 12px 30px rgba(0,0,0,0.08)",
     transition: "transform 0.3s ease, box-shadow 0.3s ease",
     margin: "0 auto",
+    position: "relative",
   },
   image: {
     width: "100%",
@@ -33,6 +35,17 @@ const styles = {
     objectFit: "cover",
     borderRadius: "12px",
     marginBottom: "15px",
+  },
+  badge: {
+    position: "absolute",
+    top: "10px",
+    right: "10px",
+    backgroundColor: "#d16ba5",
+    color: "#ffffff",
+    padding: "5px 12px",
+    borderRadius: "20px",
+    fontSize: "12px",
+    fontWeight: "bold",
   },
   price: {
     fontWeight: "600",

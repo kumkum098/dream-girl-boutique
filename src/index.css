@@ -1,3 +1,14 @@
+* {
+  box-sizing: border-box;
+}
+
+html, body, #root {
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
+
 body {
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
@@ -5,7 +16,78 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  background-color: #f5f5f5;
 }
+
+/* Button Hover Effects */
+button {
+  transition: all 0.3s ease;
+}
+
+button:active {
+  transform: scale(0.95);
+}
+
+button:hover {
+  transform: translateY(-2px);
+}
+
+/* Link Hover Effects */
+a {
+  transition: all 0.3s ease;
+}
+
+/* Button Hover Class */
+.button-hover:hover {
+  box-shadow: 0 4px 12px rgba(217, 70, 166, 0.3);
+  transform: translateY(-2px);
+}
+
+.button-hover:active {
+  transform: scale(0.98);
+}
+
+/* Nav Link Animations */
+.nav-link {
+  position: relative;
+  transition: all 0.3s ease;
+}
+
+.nav-link:hover {
+  transform: scale(1.05);
+}
+
+.nav-link:active {
+  transform: scale(0.95);
+}
+
+.nav-link.active .label {
+  animation: slideInUp 0.3s ease-out;
+}
+
+/* Product Card Animations */
+.product-card {
+  animation: itemSlideIn 0.5s ease-out;
+  transition: all 0.3s ease;
+}
+
+.product-card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 8px 24px rgba(217, 70, 166, 0.2);
+}
+
+/* Fade in content */
+.content-fade-in {
+  animation: fadeIn 0.6s ease-out;
+}
+
+/* Stagger animations for multiple items */
+.stagger-item-0 { animation-delay: 0s; }
+.stagger-item-1 { animation-delay: 0.1s; }
+.stagger-item-2 { animation-delay: 0.2s; }
+.stagger-item-3 { animation-delay: 0.3s; }
+.stagger-item-4 { animation-delay: 0.4s; }
+.stagger-item-5 { animation-delay: 0.5s; }
 
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',

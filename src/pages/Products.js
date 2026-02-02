@@ -1,6 +1,10 @@
+import { useContext } from 'react';
 import ProductCard from "../components/ProductCard";
+import { ImageContext } from '../context/ImageContext';
 
 function Products() {
+  const { uploadedImages } = useContext(ImageContext);
+
   const products = [
     { name: "Bridal Lehenga", price: 8500, image: "/products/a1.jpeg" },
     { name: "Party Wear Gown", price: 4500, image: "/products/a2.jpeg" },
@@ -37,17 +41,34 @@ function Products() {
     { name: "Traditional Saree", price: 5900, image: "/products/a33.jpeg" },
   ];
 
+  // Combine existing products with uploaded images
+  const allProducts = [
+    ...products,
+    ...uploadedImages.map((img) => ({
+      name: img.name.replace(/\.[^/.]+$/, ''), // Remove file extension
+      price: 5999, // Default price for uploaded items
+      image: img.src,
+      isUploaded: true,
+    })),
+  ];
+
   return (
     <div style={styles.page}>
       <h2 style={styles.title}>Our Collection</h2>
+      {uploadedImages.length > 0 && (
+        <p style={styles.subtitle}>
+          ({uploadedImages.length} newly added item{uploadedImages.length > 1 ? 's' : ''})
+        </p>
+      )}
 
       <div style={styles.grid}>
-        {products.map((product, index) => (
+        {allProducts.map((product, index) => (
           <ProductCard
             key={index}
             name={product.name}
             price={product.price}
             image={product.image}
+            isUploaded={product.isUploaded}
           />
         ))}
       </div>
@@ -63,10 +84,17 @@ const styles = {
   },
   title: {
     textAlign: "center",
-    marginBottom: "40px",
+    marginBottom: "10px",
     fontSize: "28px",
     fontWeight: "600",
     color: "#2c2c2c",
+  },
+  subtitle: {
+    textAlign: "center",
+    marginBottom: "30px",
+    fontSize: "14px",
+    color: "#d16ba5",
+    fontWeight: "600",
   },
   grid: {
     display: "flex",

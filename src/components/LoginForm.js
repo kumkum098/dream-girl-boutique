@@ -23,11 +23,11 @@ function LoginForm() {
     }
 
     // Simulate owner authentication (Replace with actual API call)
-    // For demo: owner@dreamgirl.com / password123
+    // For demo: dreamgirlboutique14@gmail.com / DREAMGIRL.00
     setTimeout(() => {
-      if (email === 'owner@dreamgirl.com' && password === 'password123') {
-        login('Dream Girl Owner');
-        navigate('/');
+      if (email === 'dreamgirlboutique14@gmail.com' && password === 'DREAMGIRL.00') {
+        login('Dream Girl Boutique');
+        navigate('/dashboard');
       } else {
         setError('Invalid email or password');
       }
@@ -47,7 +47,7 @@ function LoginForm() {
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               style={styles.input}
-              placeholder="owner@dreamgirl.com"
+              placeholder="dreamgirlboutique14@gmail.com"
             />
           </div>
 
@@ -72,12 +72,6 @@ function LoginForm() {
             {loading ? 'Logging in...' : 'Login'}
           </button>
         </form>
-
-        <div style={styles.demoInfo}>
-          <p style={styles.demoTitle}>Demo Credentials:</p>
-          <p style={styles.demoText}>Email: owner@dreamgirl.com</p>
-          <p style={styles.demoText}>Password: password123</p>
-        </div>
       </div>
     </div>
   );

@@ -14,14 +14,14 @@
 }
 
 .App-header {
-  background-color: #282c34;
+  background-color: transparent;
   min-height: 100vh;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   font-size: calc(10px + 2vmin);
-  color: white;
+  color: inherit;
 }
 
 .App-link {
@@ -42,6 +42,7 @@
   --pink-main: #ff7eb3;
   --pink-soft: #ffe4ef;
   --pink-dark: #d16ba5;
+  --radius: 14px;
 }
 /* ===== SOFT HOVER ANIMATION ===== */
 .soft-hover {
@@ -62,4 +63,16 @@
   100% {
     transform: translateY(0);
   }
+}
+
+/* Global card / container styles to keep visuals consistent */
+.card-like {
+  background: white;
+  border-radius: var(--radius);
+  box-shadow: 0 12px 30px rgba(17,17,17,0.06);
+  overflow: hidden;
+}
+
+.hero-curve {
+  border-radius: 0 0 var(--radius) var(--radius);
 }

@@ -10,14 +10,16 @@ import CustomerDetails from "./pages/CustomerDetails";
 import { AuthProvider } from "./context/AuthContext";
 import { ImageProvider } from "./context/ImageContext";
 import { OrderProvider } from "./context/OrderContext";
+import { ShopStatusProvider } from "./context/ShopStatusContext";
 
 function App() {
   return (
     <AuthProvider>
       <ImageProvider>
         <OrderProvider>
-          <div style={styles.appContainer}>
-          <Header />
+          <ShopStatusProvider>
+            <div style={styles.appContainer}>
+            <Header />
           <div style={styles.contentContainer}>
             <Routes>
               <Route path="/" element={<Home />} />
@@ -30,6 +32,7 @@ function App() {
           </div>
           <BottomNav />
         </div>
+        </ShopStatusProvider>
         </OrderProvider>
       </ImageProvider>
     </AuthProvider>

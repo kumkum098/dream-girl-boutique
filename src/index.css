@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap');
+
 * {
   box-sizing: border-box;
 }
@@ -9,28 +11,44 @@ html, body, #root {
   padding: 0;
 }
 
+:root {
+  --bg: #fbf7fb;
+  --card-bg: #ffffff;
+  --accent: #d16ba5;
+  --accent-2: #ff7eb3;
+  --muted: #7a7a7a;
+  --radius: 14px;
+  --soft-radius: 20px;
+  --shadow-soft: 0 8px 22px rgba(17,17,17,0.06);
+  --shadow-deep: 0 20px 40px rgba(17,17,17,0.12);
+}
+
 body {
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+  font-family: 'Poppins', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto',
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  background-color: #f5f5f5;
+  background: linear-gradient(180deg, #fff 0%, var(--bg) 100%);
+  color: #222;
 }
 
 /* Button Hover Effects */
 button {
-  transition: all 0.3s ease;
+  transition: all 0.28s cubic-bezier(.2,.9,.2,1);
+  border-radius: var(--radius);
+  border: none;
+  padding: 10px 14px;
+  font-weight: 600;
+  cursor: pointer;
+  background: linear-gradient(180deg, var(--accent-2), var(--accent));
+  color: white;
+  box-shadow: var(--shadow-soft);
 }
 
-button:active {
-  transform: scale(0.95);
-}
+button:active { transform: translateY(1px) scale(0.995); }
 
-button:hover {
-  transform: translateY(-2px);
-}
+button:hover { transform: translateY(-3px); box-shadow: var(--shadow-deep); }
 
 /* Link Hover Effects */
 a {
@@ -39,13 +57,11 @@ a {
 
 /* Button Hover Class */
 .button-hover:hover {
-  box-shadow: 0 4px 12px rgba(217, 70, 166, 0.3);
-  transform: translateY(-2px);
+  box-shadow: 0 10px 30px rgba(209,107,165,0.18);
+  transform: translateY(-4px);
 }
 
-.button-hover:active {
-  transform: scale(0.98);
-}
+.button-hover:active { transform: scale(0.995); }
 
 /* Nav Link Animations */
 .nav-link {
@@ -68,12 +84,16 @@ a {
 /* Product Card Animations */
 .product-card {
   animation: itemSlideIn 0.5s ease-out;
-  transition: all 0.3s ease;
+  transition: all 0.28s cubic-bezier(.2,.9,.2,1);
+  border-radius: var(--radius);
+  overflow: hidden;
+  background: var(--card-bg);
+  box-shadow: var(--shadow-soft);
 }
 
 .product-card:hover {
-  transform: translateY(-8px);
-  box-shadow: 0 8px 24px rgba(217, 70, 166, 0.2);
+  transform: translateY(-10px);
+  box-shadow: var(--shadow-deep);
 }
 
 /* Fade in content */
@@ -95,14 +115,21 @@ code {
 }
 
 .product-image {
-  transition: box-shadow 0.3s ease, transform 0.3s ease;
+  transition: box-shadow 0.28s ease, transform 0.28s ease;
   cursor: pointer;
   display: block;
 }
 
 .product-image:hover {
-  box-shadow: 0 0 25px rgba(209, 107, 165, 0.8), 0 0 40px rgba(209, 107, 165, 0.5);
-  transform: scale(1.02);
+  box-shadow: 0 18px 50px rgba(209,107,165,0.12);
+  transform: translateY(-6px) scale(1.02);
+}
+
+/* Page container for consistent padding and soft backdrop */
+.page-container {
+  max-width: 480px;
+  margin: 0 auto;
+  padding: 20px;
 }
 
 /* Social and Contact Links Hover Effects */

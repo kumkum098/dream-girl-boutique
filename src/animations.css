@@ -64,6 +64,12 @@
   }
 }
 
+/* smoother, slower bounce for a classy feel */
+@keyframes slowBounce {
+  0%,100% { transform: translateY(0); }
+  50% { transform: translateY(-6px); }
+}
+
 /* Navigation Animations */
 @keyframes navSlideIn {
   from {
@@ -185,7 +191,7 @@
 }
 
 .animate-bounce {
-  animation: bounce 2s infinite;
+  animation: slowBounce 2.6s infinite ease-in-out;
 }
 
 .animate-pulse {
@@ -197,7 +203,7 @@
 }
 
 .animate-glow {
-  animation: glowPulse 3s ease-in-out infinite;
+  animation: glowPulse 3.2s ease-in-out infinite;
 }
 
 /* Stagger delays for list items */

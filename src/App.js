@@ -11,6 +11,7 @@ import { AuthProvider } from "./context/AuthContext";
 import { ImageProvider } from "./context/ImageContext";
 import { OrderProvider } from "./context/OrderContext";
 import { ShopStatusProvider } from "./context/ShopStatusContext";
+import InstallButton from "./components/InstallButton";
 
 function App() {
   return (
@@ -21,6 +22,8 @@ function App() {
             <div style={styles.appContainer}>
             <Header />
           <div style={styles.contentContainer}>
+            <InstallButton />
+
             <Routes>
               <Route path="/" element={<Home />} />
               <Route path="/products" element={<Products />} />

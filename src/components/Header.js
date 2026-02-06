@@ -15,7 +15,12 @@ function Header() {
   return (
     <header style={styles.header} className="animate-slide-left">
       <div style={styles.headerContent}>
-        <h1 style={styles.logo}>Dream Girl Boutique</h1>
+        <div style={styles.logoContainer}>
+          <div style={styles.logoCircle}>
+            <img src="/logo.jpg" alt="logo" style={styles.logoImage} />
+          </div>
+          <h1 style={styles.logoText}>Dream Girl Boutique</h1>
+        </div>
         {isLoggedIn && (
           <div style={styles.userSection}>
             <span style={styles.ownerName}>👤 {ownerName}</span>
@@ -64,6 +69,35 @@ const styles = {
     color: "#ffffff",
     transition: "all 0.28s cubic-bezier(.2,.9,.2,1)",
     letterSpacing: "-0.3px",
+  },
+  logoContainer: {
+    display: 'flex',
+    alignItems: 'center',
+    gap: '12px',
+  },
+  logoCircle: {
+    width: '44px',
+    height: '44px',
+    borderRadius: '50%',
+    overflow: 'hidden',
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    backgroundColor: 'rgba(255,255,255,0.15)',
+    boxShadow: '0 4px 12px rgba(0,0,0,0.08)'
+  },
+  logoImage: {
+    width: '100%',
+    height: '100%',
+    objectFit: 'cover',
+    display: 'block',
+  },
+  logoText: {
+    margin: 0,
+    fontSize: '18px',
+    fontWeight: '700',
+    color: '#ffffff',
+    letterSpacing: '-0.3px',
   },
   userSection: {
     display: "flex",

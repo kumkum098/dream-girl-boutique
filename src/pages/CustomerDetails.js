@@ -25,8 +25,10 @@ function CustomerDetails() {
   const [successMessage, setSuccessMessage] = useState('');
   const [collectionImages, setCollectionImages] = useState([]);
   const [showCollectionSection, setShowCollectionSection] = useState(false);
+  const [searchTerm, setSearchTerm] = useState('');
+  const [isSaved, setIsSaved] = useState(false);
 
-  // Redirect to login if not authenticated
+  // Redirect to login if not authenticated — only owner can view/place orders
   useEffect(() => {
     if (!isLoggedIn) {
       navigate('/login');
@@ -64,9 +66,7 @@ function CustomerDetails() {
       newErrors.productName = 'Product Name is required';
     }
 
-    if (!productImage) {
-      newErrors.productImage = 'Product Image is required';
-    }
+    // Product image is optional — don't block saving if not provided
 
     if (!formData.price) {
       newErrors.price = 'Price is required';
@@ -114,13 +114,25 @@ function CustomerDetails() {
     e.preventDefault();
 
     if (validateForm()) {
-      setSuccessMessage('Customer details saved successfully!');
-      
-      // Save order to context
-      addOrder({
-        ...formData,
-        productImage,
-      });
+      console.log('Submitting customer order', { formData, productImage });
+
+      // Save order to context and capture the returned order
+      try {
+        const newOrder = addOrder({
+          ...formData,
+          productImage,
+        });
+        console.log('Order saved', newOrder);
+        setSuccessMessage('Customer details saved successfully!');
+        // mark saved to change button color
+        setIsSaved(true);
+        // temporary visible confirmation for debugging
+        alert('Customer details saved');
+      } catch (err) {
+        console.error('Error saving order', err);
+        alert('Failed to save customer details — see console');
+        return;
+      }
 
       // Reset form after 2 seconds
       setTimeout(() => {
@@ -135,6 +147,7 @@ function CustomerDetails() {
         setProductImage(null);
         setSuccessMessage('');
         setShowForm(false);
+          setIsSaved(false);
       }, 2000);
     }
   };
@@ -176,6 +189,12 @@ function CustomerDetails() {
     setSuccessMessage('');
   };
 
+  // Filter orders by search term (search by customer full name, case-insensitive)
+  const filteredOrders = savedOrders.filter((order) => {
+    if (!searchTerm) return true;
+    return order.fullName && order.fullName.toLowerCase().includes(searchTerm.trim().toLowerCase());
+  });
+
   return (
     <div style={styles.container}>
       <div style={styles.header}>
@@ -192,15 +211,29 @@ function CustomerDetails() {
               {isOpen ? '✅ Currently OPEN' : '🔒 Currently CLOSED'}
             </p>
           </div>
-          <button
-            onClick={toggleShopStatus}
-            style={{
-              ...styles.toggleStatusBtn,
-              backgroundColor: isOpen ? '#ff7eb3' : '#28a745',
-            }}
-          >
-            {isOpen ? 'Close Shop' : 'Open Shop'}
-          </button>
+          {isLoggedIn ? (
+            <button
+              onClick={toggleShopStatus}
+              style={{
+                ...styles.toggleStatusBtn,
+                backgroundColor: isOpen ? '#ff7eb3' : '#28a745',
+              }}
+            >
+              {isOpen ? 'Close Shop' : 'Open Shop'}
+            </button>
+          ) : (
+            <button
+              disabled
+              style={{
+                ...styles.toggleStatusBtn,
+                backgroundColor: '#cccccc',
+                cursor: 'not-allowed',
+                opacity: 0.85,
+              }}
+            >
+              Owner Only
+            </button>
+          )}
         </div>
       </section>
 
@@ -211,59 +244,82 @@ function CustomerDetails() {
       {/* Saved Orders Section */}
       {savedOrders.length > 0 && (
         <section style={styles.ordersSection}>
+          <div style={styles.searchBar}>
+            <input
+              type="text"
+              placeholder="Search by customer name"
+              value={searchTerm}
+              onChange={(e) => setSearchTerm(e.target.value)}
+              style={styles.searchInput}
+            />
+            {searchTerm && (
+              <button
+                type="button"
+                onClick={() => setSearchTerm('')}
+                style={styles.clearBtn}
+              >
+                Clear
+              </button>
+            )}
+          </div>
+
           <h2 style={styles.sectionTitle}>Saved Orders ({savedOrders.length})</h2>
           <div style={styles.ordersList}>
-            {savedOrders.map((order) => (
-              <div key={order.id} style={styles.orderCard}>
-                <div style={styles.orderHeader}>
-                  <h3 style={styles.orderCustomerName}>{order.fullName}</h3>
-                  <span style={styles.orderDate}>{order.createdAt}</span>
-                </div>
-
-                <div style={styles.orderContent}>
-                  <div style={styles.orderInfo}>
-                    <p>
-                      <strong>Phone:</strong> {order.phone}
-                    </p>
-                    <p>
-                      <strong>Address:</strong> {order.address}
-                    </p>
-                    <p>
-                      <strong>Product:</strong> {order.productName}
-                    </p>
-                    <p>
-                      <strong>Price:</strong> ₹{parseFloat(order.price).toFixed(2)}
-                    </p>
-                    <p>
-                      <strong>Payment Status:</strong>
-                      <span
-                        style={{
-                          ...styles.paymentStatusBadge,
-                          backgroundColor: order.paymentStatus ? '#28a745' : '#ffc107',
-                        }}
-                      >
-                        {order.paymentStatus ? '✓ Paid' : 'Pending'}
-                      </span>
-                    </p>
+            {filteredOrders.length > 0 ? (
+              filteredOrders.map((order) => (
+                <div key={order.id} style={styles.orderCard}>
+                  <div style={styles.orderHeader}>
+                    <h3 style={styles.orderCustomerName}>{order.fullName}</h3>
+                    <span style={styles.orderDate}>{order.createdAt}</span>
                   </div>
 
-                  {order.productImage && (
-                    <img
-                      src={order.productImage}
-                      alt={order.productName}
-                      style={styles.orderProductImage}
-                    />
-                  )}
-                </div>
+                  <div style={styles.orderContent}>
+                    <div style={styles.orderInfo}>
+                      <p>
+                        <strong>Phone:</strong> {order.phone}
+                      </p>
+                      <p>
+                        <strong>Address:</strong> {order.address}
+                      </p>
+                      <p>
+                        <strong>Product:</strong> {order.productName}
+                      </p>
+                      <p>
+                        <strong>Price:</strong> ₹{parseFloat(order.price).toFixed(2)}
+                      </p>
+                      <p>
+                        <strong>Payment Status:</strong>
+                        <span
+                          style={{
+                            ...styles.paymentStatusBadge,
+                            backgroundColor: order.paymentStatus ? '#28a745' : '#ffc107',
+                          }}
+                        >
+                          {order.paymentStatus ? '✓ Paid' : 'Pending'}
+                        </span>
+                      </p>
+                    </div>
 
-                <button
-                  onClick={() => deleteOrder(order.id)}
-                  style={styles.deleteOrderBtn}
-                >
-                  🗑️ Delete Order
-                </button>
-              </div>
-            ))}
+                    {order.productImage && (
+                      <img
+                        src={order.productImage}
+                        alt={order.productName}
+                        style={styles.orderProductImage}
+                      />
+                    )}
+                  </div>
+
+                  <button
+                    onClick={() => deleteOrder(order.id)}
+                    style={styles.deleteOrderBtn}
+                  >
+                    🗑️ Delete Order
+                  </button>
+                </div>
+              ))
+            ) : (
+              <p style={styles.noResults}>No customers match that name.</p>
+            )}
           </div>
         </section>
       )}
@@ -557,8 +613,11 @@ function CustomerDetails() {
 
         {/* Form Actions */}
         <div style={styles.formActions}>
-          <button type="submit" style={styles.submitBtn}>
-            Save Customer Details
+          <button
+            type="submit"
+            style={isSaved ? { ...styles.submitBtn, backgroundColor: '#28a745', boxShadow: '0 8px 20px rgba(40,167,69,0.18)' } : styles.submitBtn}
+          >
+            {isSaved ? 'Saved ✓' : 'Save Customer Details'}
           </button>
           <button 
             type="button" 
@@ -1132,6 +1191,37 @@ const styles = {
     cursor: 'pointer',
     transition: 'all 0.28s cubic-bezier(.2,.9,.2,1)',
     boxShadow: '0 8px 20px rgba(209,107,165,0.18)',
+  },
+  /* Search */
+  searchBar: {
+    display: 'flex',
+    gap: '8px',
+    marginBottom: '12px',
+    alignItems: 'center',
+  },
+  searchInput: {
+    flex: 1,
+    padding: '10px 12px',
+    border: '1px solid #ddd',
+    borderRadius: '10px',
+    fontSize: '14px',
+    backgroundColor: '#fff',
+  },
+  clearBtn: {
+    padding: '10px 14px',
+    background: '#f1f1f1',
+    border: '1px solid #e0e0e0',
+    borderRadius: '10px',
+    cursor: 'pointer',
+    fontWeight: '600',
+    color: '#333',
+  },
+  noResults: {
+    padding: '18px',
+    textAlign: 'center',
+    color: '#666',
+    backgroundColor: '#fff8f9',
+    borderRadius: '10px',
   },
 };
 

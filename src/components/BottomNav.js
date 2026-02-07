@@ -7,7 +7,7 @@ function BottomNav() {
   const isActive = (path) => location.pathname === path;
 
   return (
-    <nav style={styles.bottomNav} className="animate-slide-up">
+    <nav style={styles.bottomNav} className="animate-slide-up bottom-nav">
       <Link
         to="/"
         style={{
@@ -69,7 +69,7 @@ const styles = {
     borderTop: "1px solid rgba(209,107,165,0.08)",
     boxShadow: "0 -4px 16px rgba(17,17,17,0.06)",
     height: "70px",
-    maxWidth: "480px",
+    maxWidth: "1200px",
     margin: "0 auto",
     zIndex: 100,
     animation: "slideInUp 0.6s ease-out",

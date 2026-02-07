@@ -53,15 +53,15 @@ function Products() {
   ];
 
   return (
-    <div style={styles.page}>
-      <h2 style={styles.title}>Our Collection</h2>
+    <div className="products-page page-container">
+      <h2 className="page-title">Our Collection</h2>
       {uploadedImages.length > 0 && (
-        <p style={styles.subtitle}>
+        <p className="page-subtitle">
           ({uploadedImages.length} newly added item{uploadedImages.length > 1 ? 's' : ''})
         </p>
       )}
 
-      <div style={styles.grid}>
+      <div className="products-grid">
         {allProducts.map((product, index) => (
           <ProductCard
             key={index}
@@ -76,33 +76,6 @@ function Products() {
   );
 }
 
-const styles = {
-  page: {
-    padding: "40px 16px",
-    backgroundColor: "#fdf6f9",
-    minHeight: "100vh",
-  },
-  title: {
-    textAlign: "center",
-    marginBottom: "10px",
-    fontSize: "28px",
-    fontWeight: "600",
-    color: "#2c2c2c",
-  },
-  subtitle: {
-    textAlign: "center",
-    marginBottom: "30px",
-    fontSize: "14px",
-    color: "#d16ba5",
-    fontWeight: "600",
-  },
-  grid: {
-    display: "flex",
-    gap: "30px",
-    justifyContent: "center",
-    flexWrap: "wrap",
-  },
-};
 
 
 export default Products;

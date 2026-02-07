@@ -48,9 +48,9 @@ const styles = {
     flexDirection: "column",
     height: "100vh",
     backgroundColor: "#f5f5f5",
-    maxWidth: "480px",
+    maxWidth: "1200px",
     margin: "0 auto",
-    boxShadow: "0 0 30px rgba(0,0,0,0.2)",
+    boxShadow: "none",
   },
   contentContainer: {
     flex: 1,

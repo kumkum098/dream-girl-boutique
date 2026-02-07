@@ -9,7 +9,7 @@ function Home() {
   const { isOpen } = useContext(ShopStatusContext);
   const navigate = useNavigate();
   return (
-    <div style={styles.page}>
+    <div className="page-container" style={styles.page}>
       {/* Shop Status Banner */}
       <div style={{
         ...styles.statusBanner,
@@ -30,17 +30,18 @@ function Home() {
         </span>
       </div>
 
-      <section style={styles.hero}>
-        <div style={styles.heroContent}>
+      <section className="home-hero" style={styles.hero}>
+        <div className="hero-content" style={styles.heroContent}>
           <div style={styles.logoContainer}>
             <img
+              className="hero-logo"
               src="/logo.jpg"
               alt="Dream Girl Boutique Logo"
               style={styles.heroLogo}
             />
           </div>
 
-          <h1 style={styles.heroTitle}>Dream Girl Boutique</h1>
+          <h1 className="hero-title" style={styles.heroTitle}>Dream Girl Boutique</h1>
 
           <p style={styles.heroSubtitle}>
             Handcrafted outfits stitched with love, tradition & elegance
@@ -88,13 +89,14 @@ function Home() {
       </section>
 
       {/* Location QR Code Section */}
-      <section style={styles.qrSection}>
+      <section className="qr-section" style={styles.qrSection}>
         <div style={styles.qrContainer}>
           <h2 style={styles.qrTitle}>Visit Our Boutique</h2>
           <p style={styles.qrSubtitle}>Scan to find our location</p>
           
           <div style={styles.qrWrapper}>
             <img
+              className="qr-image"
               src="/qr-location.jpg"
               alt="Location QR Code - Dream Girl Boutique"
               style={styles.qrImage}
@@ -133,12 +135,12 @@ const styles = {
   },
 
   hero: {
-    minHeight: "85vh",
+    minHeight: "60vh",
     background: "linear-gradient(135deg, rgba(255,126,179,0.08) 0%, rgba(209,107,165,0.08) 50%, rgba(255,230,239,0.12) 100%)",
     display: "flex",
     alignItems: "center",
     justifyContent: "center",
-    padding: "40px 20px",
+    padding: "24px 16px",
   },
 
   heroContent: {
@@ -154,8 +156,8 @@ const styles = {
   },
 
   heroLogo: {
-    width: "140px",
-    height: "140px",
+    width: "120px",
+    height: "120px",
     borderRadius: "50%",
     boxShadow: "0 20px 50px rgba(209,107,165,0.15)",
     objectFit: "cover",
@@ -163,10 +165,10 @@ const styles = {
   },
 
   heroTitle: {
-    fontSize: "42px",
+    fontSize: "32px",
     fontWeight: "700",
     color: "#2c2c2c",
-    margin: "30px 0 16px 0",
+    margin: "20px 0 12px 0",
     lineHeight: "1.2",
     letterSpacing: "-0.5px",
   },
@@ -184,7 +186,7 @@ const styles = {
     gap: "14px",
     justifyContent: "center",
     flexWrap: "wrap",
-    marginBottom: "40px",
+    marginBottom: "20px",
   },
 
   primaryBtn: {
@@ -279,8 +281,8 @@ const styles = {
   /* Location QR Code Section */
   qrSection: {
     background: "linear-gradient(135deg, rgba(209,107,165,0.06) 0%, rgba(255,126,179,0.04) 100%)",
-    padding: "60px 20px",
-    minHeight: "60vh",
+    padding: "36px 16px",
+    minHeight: "40vh",
     display: "flex",
     alignItems: "center",
     justifyContent: "center",
@@ -320,8 +322,8 @@ const styles = {
   },
 
   qrImage: {
-    width: "280px",
-    height: "280px",
+    width: "220px",
+    height: "220px",
     objectFit: "contain",
     borderRadius: "12px",
     cursor: "pointer",

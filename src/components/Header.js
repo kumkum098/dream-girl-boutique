@@ -13,7 +13,7 @@ function Header() {
   };
 
   return (
-    <header style={styles.header} className="animate-slide-left">
+    <header style={styles.header} className="animate-slide-left site-header">
       <div style={styles.headerContent}>
         <div style={styles.logoContainer}>
           <div style={styles.logoCircle}>
